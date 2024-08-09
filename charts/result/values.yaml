@@ -1,0 +1,13 @@
+global:
+  appName: result
+  image:
+    repository: dockersamples/examplevotingapp_result
+    tag: "latest"
+
+replicaCount: 1
+
+service:
+  type: NodePort
+  port: 5001
+  targetPort: 80
+  nodePort: 31001
