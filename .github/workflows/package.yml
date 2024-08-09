@@ -1,0 +1,38 @@
+name: Package Helm Charts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  package:
+    name: Package Helm Charts
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Pull Docker image
+        run: |
+          docker pull ghcr.io/${{ github.repository }}/ci-cd-image:latest
+
+      - name: Run packaging
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace ghcr.io/${{ github.repository }}/ci-cd-image:latest bash -c "
+            helm package my-redis-chart
+            helm package my-vote-chart
+            helm package my-result-chart
+            helm package my-worker-chart
+          "
+
+      - name: Upload Helm charts
+        uses: actions/upload-artifact@v3
+        with:
+          name: helm-charts
+          path: |
+            my-redis-chart-*.tgz
+            my-vote-chart-*.tgz
+            my-result-chart-*.tgz
+            my-worker-chart-*.tgz

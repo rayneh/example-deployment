@@ -1,0 +1,7 @@
+global:
+  appName: worker
+  image:
+    repository: dockersamples/examplevotingapp_worker
+    tag: "latest"
+
+replicaCount: 1

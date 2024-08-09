@@ -1,0 +1,6 @@
+# Ignore all IntelliJ IDEA specific files
+.idea/
+*.iws
+*.iml
+*.ipr
+
